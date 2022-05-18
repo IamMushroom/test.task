@@ -1,0 +1,14 @@
+services:
+  hello:
+    image: hello:0.2
+    container_name: hello
+    ports: 
+      - 8000:8000
+      - 8001:8001
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - .\prom_config:/etc/prometheus/
+    ports:
+      - 9090:9090
