@@ -10,6 +10,9 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
+    depends_on:
+      hello:
+        condition: service_healthy
     volumes:
       - ${PROM_CONF_DIR}:/etc/prometheus/
     restart: unless-stopped
@@ -24,6 +27,9 @@ services:
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
+    depends_on:
+      prometheus:
+        condition: service_healthy
     volumes:
       - ${GRAF_CONF_DIR}:/etc/grafana/provisioning
     restart: unless-stopped
@@ -36,6 +42,5 @@ services:
       start_period: 30s
       timeout: 10s
     environment:
-       - GF_SECURITY_ADMIN_PASSWORD=MYPASSWORT
-       - GF_USERS_ALLOW_SIGN_UP=false
-    
+      - GF_SECURITY_ADMIN_PASSWORD=MYPASSWORT
+      - GF_USERS_ALLOW_SIGN_UP=false
