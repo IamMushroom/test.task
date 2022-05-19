@@ -9,4 +9,5 @@ EXPOSE 8000
 EXPOSE 8001
 HEALTHCHECK --interval=10s --timeout=10s --start-period=30s \  
     CMD python3 /app/healthcheck.py
+RUN mkdir -p /app/log
 CMD python3 /app/hello.py
