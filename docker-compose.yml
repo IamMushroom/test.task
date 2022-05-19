@@ -1,6 +1,6 @@
 services:
   hello:
-    image: hello
+    image: immushroom/hello
     container_name: hello
     volumes:
       - ${HELLO_LOG_DIR}:/app/log
