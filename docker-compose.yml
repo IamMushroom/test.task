@@ -1,6 +1,6 @@
 services:
   hello:
-    image: hello:0.3
+    image: hello
     container_name: hello
     volumes:
       - ${HELLO_LOG_DIR}:/app/log
