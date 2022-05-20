@@ -56,3 +56,10 @@
 
 ## requirements.txt
 Файл содержит дополнительные зависимости для приложения hello.
+
+# Как запустить?
+В файле docekr-compose.yml прописан уже собранный образ приложения, загруженный в мой репозиторий, так что достаточно запустить:  
+``` bash
+git clone https://gitlab.com/iammushroom/test.task
+docker compose up -d --build
+```
