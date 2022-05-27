@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-grafana-dashboards-configmap
-data:
-  {{ (.Files.Glob "files/graf_config/dashboards/*").AsConfig | indent 2 }}

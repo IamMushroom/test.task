@@ -1,16 +1,14 @@
 apiVersion: 1
-
 deleteDatasources:
   - name: prometheus
     orgId: 1
-
 datasources:
   - name: prometheus
     type: prometheus
     access: proxy
     orgId: 1
     uid: prom-wkaw34ku5yc
-    url: http://prometheus:9090
+    url: http://localhost:9090
     is_default: true
     editable: false
     jsonData:

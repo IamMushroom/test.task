@@ -5,7 +5,6 @@ metadata:
   labels:
     app: {{ .Release.Name }}-web
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: hello
@@ -67,11 +66,14 @@ spec:
         configMap:
           defaultMode: 420
           name: {{ .Release.Name }}-prometheus-configmap
-      - name: grafana-dashboards
-        configMap:
-          defaultMode: 420
-          name: {{ .Release.Name }}-grafana-dashboards-configmap
       - name: grafana-datasources
         configMap:
           defaultMode: 420
           name: {{ .Release.Name }}-grafana-datasources-configmap
+      - name: grafana-dashboards
+        projected:
+          sources:
+          - configMap:
+              name: {{ .Release.Name }}-grafana-dashboards-json-configmap
+          - configMap:
+              name: {{ .Release.Name }}-grafana-dashboards-yml-configmap
