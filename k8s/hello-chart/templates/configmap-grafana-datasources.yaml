@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-grafana-datasources-configmap
+data:
+  {{ (.Files.Glob "files/graf_config/datasources/*").AsConfig | indent 2 }}
+  

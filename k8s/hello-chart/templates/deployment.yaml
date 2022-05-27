@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Release.Name }}-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: hello
+        image: immushroom/hello
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+        - containerPort: 8001
+      - name: prometheus
+        image: prom/prometheus
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: prometheus-config
+          mountPath: /etc/prometheus/
+        ports:
+        - containerPort: 9090
+      - name: grafana
+        image: grafana/grafana-oss
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: grafana-dashboards
+          mountPath: /etc/grafana/provisioning/dashboards
+        - name: grafana-datasources
+          mountPath: /etc/grafana/provisioning/datasources
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "MYPASSWORT"
+        - name: GF_USERS_ALLOW_SIGN_UP
+          value: "false"
+      volumes:
+      - name: prometheus-config
+        configMap:
+          defaultMode: 420
+          name: {{ .Release.Name }}-prometheus-configmap
+      - name: grafana-dashboards
+        configMap:
+          defaultMode: 420
+          name: {{ .Release.Name }}-grafana-dashboards-configmap
+      - name: grafana-datasources
+        configMap:
+          defaultMode: 420
+          name: {{ .Release.Name }}-grafana-datasources-configmap
