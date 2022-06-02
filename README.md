@@ -9,6 +9,7 @@
 3. В папке graf_config/provisioning лежат:
     + В папке datasources – yml для подключения к Prometheus
     + В папке dashboards – yml и json для импорта дашбордов
+4. В папке helm лежит чарт для установки приложения и окружения
 
 ## src
 
